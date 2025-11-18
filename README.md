@@ -1,12 +1,10 @@
-# Project: NAME
+# Project: JavaGuard
 
 ## Contributors
-NAME, NAME, NAME
+Wendy Huang, Yindi Zhao
 
 ## Dependencies
-- LANGUAGE AND VERSION
-- EXTERNAL LIBRARIES
-- ETC
+- JDK 11
 
 ## Build Instructions
 HOW TO BUILD YOUR PROJECT.
