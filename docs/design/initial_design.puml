@@ -1,0 +1,47 @@
+@startuml
+
+title Java Linter Layered Architecture
+
+/' Presentation Layer '/
+class LinterCore {
+  - CheckManager checkManager
+  + run()
+}
+
+class ReportGenerator {
+  + generateReport(List<String> issues)
+}
+
+/' Logic Layer '/
+class CheckManager {
+  - List<Check> checks
+  + register(Check check)
+  + runAll(byte[] classBytes)
+}
+
+interface Check {
+  + runCheck(byte[] classBytes)
+}
+
+class NamingConventionCheck
+class EqualsHashCodeCheck
+class InterfaceUsageCheck
+
+/' Data Layer '/
+class ASMHandler {
+  + parse(byte[] classBytes)
+  + getClassReader()
+}
+
+' Relationships
+LinterCore --> CheckManager : uses
+CheckManager --> Check : manages >
+Check <|.. NamingConventionCheck
+Check <|.. EqualsHashCodeCheck
+Check <|.. InterfaceUsageCheck
+
+LinterCore --> ASMHandler : loads bytecode >
+CheckManager --> ASMHandler : passes class info >
+LinterCore --> ReportGenerator : reports >
+
+@enduml
