@@ -48,10 +48,19 @@ public class MyFirstLinter {
 
 			// Now we can navigate the classNode and look for things we are interested in.
 			printClass(classNode);
-
 			printFields(classNode);
-			
 			printMethods(classNode);
+
+			// Run lint checks
+			System.out.println("\n--- Lint Checks ---");
+
+            checkClassNaming(classNode);
+            checkFieldNaming(classNode);
+            checkMethodNaming(classNode);
+            checkEqualsHashCode(classNode);
+            checkProgramToInterface(classNode);
+
+            System.out.println("====== End Analysis ======\n");
 		}
 	}
 
