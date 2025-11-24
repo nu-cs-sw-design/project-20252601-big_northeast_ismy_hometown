@@ -1,5 +1,7 @@
 package example;
 
+import checks.*;
+
 import java.io.IOException;
 import java.util.List;
 
@@ -54,11 +56,11 @@ public class MyFirstLinter {
 			// Run lint checks
 			System.out.println("\n--- Lint Checks ---");
 
-            checkClassNaming(classNode);
-            checkFieldNaming(classNode);
-            checkMethodNaming(classNode);
-            checkEqualsHashCode(classNode);
-            checkProgramToInterface(classNode);
+			new ClassNamingCheck().run(classNode);
+			new FieldNamingCheck().run(classNode);
+			new MethodNamingCheck().run(classNode);
+			new EqualsHashCodeCheck().run(classNode);
+			new ProgramToInterfaceCheck().run(classNode);
 
             System.out.println("====== End Analysis ======\n");
 		}
