@@ -1,7 +1,9 @@
 package checks;
 
+import java.util.List;
+
 import org.objectweb.asm.tree.ClassNode;
 
 public interface Check {
-    void run(ClassNode classNode);
+    List<String> run(ClassNode classNode);
 }

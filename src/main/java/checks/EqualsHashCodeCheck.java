@@ -1,5 +1,6 @@
 package checks;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.objectweb.asm.tree.ClassNode;
@@ -8,7 +9,8 @@ import org.objectweb.asm.tree.MethodNode;
 public class EqualsHashCodeCheck implements Check {
 
     @Override
-    public void run(ClassNode classNode) {
+    public List<String> run(ClassNode classNode) {
+        List<String> warnings = new ArrayList<>();
 
         boolean hasEquals = false;
         boolean hasHashCode = false;
@@ -16,7 +18,6 @@ public class EqualsHashCodeCheck implements Check {
         List<MethodNode> methods = (List<MethodNode>) classNode.methods;
 
         for (MethodNode m : methods) {
-
             if (m.name.equals("equals") &&
                 m.desc.equals("(Ljava/lang/Object;)Z")) {
                 hasEquals = true;
@@ -29,11 +30,13 @@ public class EqualsHashCodeCheck implements Check {
         }
 
         if (hasEquals && !hasHashCode) {
-            System.out.println("[Lint] equals() is defined but hashCode() is missing.");
+            warnings.add("equals() is defined but hashCode() is missing.");
         }
 
         if (hasHashCode && !hasEquals) {
-            System.out.println("[Lint] hashCode() is defined but equals() is missing.");
+            warnings.add("hashCode() is defined but equals() is missing.");
         }
+        
+        return warnings;
     }
 }
