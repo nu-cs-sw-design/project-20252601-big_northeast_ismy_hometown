@@ -61,6 +61,7 @@ public class MyFirstLinter {
 			new MethodNamingCheck().run(classNode);
 			new EqualsHashCodeCheck().run(classNode);
 			new ProgramToInterfaceCheck().run(classNode);
+			new PublicFieldCheck().run(classNode);
 
             System.out.println("====== End Analysis ======\n");
 		}
