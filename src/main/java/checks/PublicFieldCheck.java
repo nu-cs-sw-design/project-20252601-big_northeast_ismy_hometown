@@ -17,7 +17,6 @@ public class PublicFieldCheck implements Check {
         for (FieldNode field : fields) {
             boolean isPublic = (field.access & Opcodes.ACC_PUBLIC) != 0;
             boolean isFinal = (field.access & Opcodes.ACC_FINAL) != 0;
-            boolean isStatic = (field.access & Opcodes.ACC_STATIC) != 0;
             if (isPublic && !isFinal) {
                 warnings.add("Public non-final field: " + field.name +
                         " (maybe make it private with getter/setter for encapsulation)");

@@ -11,10 +11,11 @@ public class ClassNamingCheck implements Check {
     @Override
     public List<String> run(ClassNode classNode) {
         List<String> warnings = new ArrayList<>();
-        String className = Type.getObjectType(classNode.name).getClassName();
+        String fullClassName = Type.getObjectType(classNode.name).getClassName();
+        String simpleClassName = fullClassName.substring(fullClassName.lastIndexOf('.') + 1);
 
-        if (!Character.isUpperCase(className.charAt(0))) {
-            warnings.add("Bad class name: " + className +
+        if (simpleClassName.length() > 0 && !Character.isUpperCase(simpleClassName.charAt(0))) {
+            warnings.add("Bad class name: " + fullClassName +
                     " (Should start with uppercase)");
         }
         
