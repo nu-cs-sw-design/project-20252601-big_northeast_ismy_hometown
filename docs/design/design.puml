@@ -1,2 +1,64 @@
 @startuml
+
+title JavaGuard Linter Architecture
+
+package "example" {
+    class MyFirstLinter {
+        + main(String[] args)
+    }
+}
+
+package "core" {
+    class LinterCore {
+        - ASMHandler asmHandler
+        - CheckManager checkManager
+        - ReportGenerator reportGenerator
+        + run(String... inputPaths)
+        - analyzePath(String inputPath)
+    }
+    
+    class ASMHandler {
+        + loadClass(File file)
+        + loadClass(InputStream inputStream)
+        + loadClass(byte[] bytes)
+        + loadClass(String className)
+    }
+    
+    class CheckManager {
+        - List<Check> checks
+        + addCheck(Check check)
+        + runAll(ClassNode classNode)
+    }
+    
+    class ReportGenerator {
+        + printReport(List<String> warnings)
+    }
+}
+
+package "checks" {
+    interface Check {
+        + run(ClassNode classNode) : List<String>
+    }
+    
+    class ClassNamingCheck implements Check
+    class FieldNamingCheck implements Check
+    class MethodNamingCheck implements Check
+    class EqualsHashCodeCheck implements Check
+    class ProgramToInterfaceCheck implements Check
+    class PublicFieldCheck implements Check
+}
+
+' Relationships
+MyFirstLinter --> LinterCore
+MyFirstLinter --> ASMHandler
+MyFirstLinter --> CheckManager
+MyFirstLinter --> ReportGenerator
+MyFirstLinter --> Check
+
+LinterCore --> ASMHandler
+LinterCore --> CheckManager
+LinterCore --> ReportGenerator
+
+CheckManager --> Check
+
 @enduml
